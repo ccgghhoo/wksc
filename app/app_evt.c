@@ -23,3 +23,5 @@ bool check_app_evt(uint32_t evt)
 {
     return (m_app_evt&evt)? 1:0;
 }
+
+//end of  file
