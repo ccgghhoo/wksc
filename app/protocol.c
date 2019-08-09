@@ -228,7 +228,7 @@ static uint8_t * protocol_read_led_mode(uint8_t *readbuff)
     *p_readbuff++ = led_inc_mode_red.led_inc_mode;     
 	*p_readbuff++ = led_inc_mode_green.led_inc_mode; 
     *p_readbuff++ = led_inc_mode_blue.led_inc_mode;     
-	*p_readbuff++ = 0x00;//led_br
+	*p_readbuff++ = led_pwm_inc_mode;//led_br
     
     return p_readbuff;
 }

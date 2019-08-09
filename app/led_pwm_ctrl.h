@@ -19,7 +19,7 @@ typedef struct
  
 
 extern led_inc_mode_t led_inc_mode_red, led_inc_mode_green, led_inc_mode_blue;
-
+extern uint8_t led_pwm_inc_mode;
 
 
 void bsp_pwm_init(void);
