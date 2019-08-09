@@ -190,8 +190,9 @@ void led_pwm_breath_handle(void)
             static uint8_t  on_cnt=0 , off_cnt=0, cycle_cnt=0;
             if(cycle_cnt>=4)
             {
-                led_pwm_inc_mode = 0;
+                stop_led_pwm0();
                 cycle_cnt =0;
+                return;
             }
             
             if(on_cnt<1)
@@ -221,7 +222,7 @@ void led_pwm_breath_handle(void)
             static uint8_t  on_cnt=0 , off_cnt=0 ,cycle_cnt=0 ;
             if(cycle_cnt>=4)
             {
-                led_pwm_inc_mode = 0;
+                stop_led_pwm0();
                 cycle_cnt = 0;
                 return;
             }
@@ -253,7 +254,7 @@ void led_pwm_breath_handle(void)
              
             if(cycle_cnt>=4)
             {
-                led_pwm_inc_mode = 0;
+                stop_led_pwm0();
                 cycle_cnt = 0;
                 return;
             }  
@@ -288,14 +289,21 @@ void led_pwm_breath_handle(void)
 
 void stop_led_pwm0(void)
 {
-    nrfx_pwm_stop(&m_pwm0,1);
+    m_pwm0_seq_values.channel_0 = LED_PWM_PERIOD;
+    m_pwm0_seq_values.channel_1 = LED_PWM_PERIOD; 
+    
+    nrfx_pwm_stop(&m_pwm0,1);    
     nrf_gpio_pin_clear(RED_LED_PWM0);//
-    nrf_gpio_pin_clear(BLUE_LED_PWM0);//       
+    nrf_gpio_pin_clear(BLUE_LED_PWM0);// 
+    led_pwm_inc_mode = 0;
+ 
 }
 
 void start_led_pwm0(void)
-{    
-   nrf_drv_pwm_simple_playback(&m_pwm0, &m_pwm0_seq, 1, NRF_DRV_PWM_FLAG_LOOP);                
+{  
+   m_pwm0_seq_values.channel_0 = LED_PWM_PERIOD;
+   m_pwm0_seq_values.channel_1 = LED_PWM_PERIOD;     
+   nrf_drv_pwm_simple_playback(&m_pwm0, &m_pwm0_seq, 1, NRF_DRV_PWM_FLAG_LOOP);    
 }
 
 
@@ -351,14 +359,8 @@ led_inc_mode_t led_inc_mode_red, led_inc_mode_green, led_inc_mode_blue;
 
 static void timer_100ms_handler(void * p_context)
 {
-    if(led_pwm_inc_mode!=0)
-    {    
-       led_pwm_breath_handle();
-    }        
-    else
-    {
-       stop_led_pwm0();
-    }
+  
+    led_pwm_breath_handle();
            
     led_inc_mode_drv_process();
     
@@ -420,7 +422,11 @@ void led_mode_set(uint8_t led_id ,  uint8_t mode)
         led_pwm_inc_mode = mode;
         if(mode)
         {
-            start_led_pwm0();
+            start_led_pwm0();            
+        }
+        else
+        {
+            stop_led_pwm0();
         }
     }
     

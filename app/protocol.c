@@ -116,6 +116,7 @@ static void dev_factory_test_data_consume( const uint8_t * p_data, uint16_t len 
 }
 
 
+//==========================read  keys====================================
 static uint8_t * protocol_read_step_cnt(uint8_t *readbuff)
 {
     uint8_t *p_readbuff = readbuff;
@@ -289,6 +290,7 @@ static uint8_t * protocol_read_falldown_alert(uint8_t *readbuff)
     
 }
 
+/*
 static void protocol_read_acc_data_process(void)
 {
     uint8_t buff[9];
@@ -299,7 +301,7 @@ static void protocol_read_acc_data_process(void)
     
 	LIS3DH_GetAccAxesRaw((AxesRaw_t*)(&buff[3])); //34 56 78
 	
-	__data_pack( buff, 9/*sizeof(buff)*/, FLAG_NORMAL_RESP ); 
+	__data_pack( buff, 9, FLAG_NORMAL_RESP ); 
 }
 static void protocol_read_step_cnt_process(void)
 {
@@ -324,7 +326,7 @@ static void protocol_read_status_process(void)
     protocol_read_status_data(&buff[1]);
     __data_pack( buff, 7, FLAG_NORMAL_RESP ); 
 }
-
+*/
 //-----------------------------------------------------------
 static uint8_t* protocol_read_comb_msg(const uint8_t * p_data, uint16_t len, uint8_t *rsp_buff)
 {
@@ -332,7 +334,7 @@ static uint8_t* protocol_read_comb_msg(const uint8_t * p_data, uint16_t len, uin
     uint8_t *p_buff_tail = rsp_buff;
     uint16_t temp_len=len; 
     
-    for(uint32_t i=0; i<temp_len; i--)
+    for(uint32_t i=0; i<temp_len; i++)
     {
         switch(p_data[i])
         {
@@ -399,6 +401,8 @@ static uint8_t* protocol_read_all_msg(uint8_t *rsp_buff)
    return  p_buff_tail;  
 }
 
+
+/*
 static void protocol_read_all_msg_process(void)
 {
    
@@ -490,7 +494,7 @@ static void protocol_read_info_process(void)
     
      __data_pack( buff, 43, FLAG_NORMAL_RESP ); 
 }
-
+*/
 
 
 //=====================write key==================================
@@ -598,23 +602,22 @@ static void sensor_hub_cmd_hanle(const uint8_t * p_data, uint16_t len )
     uint8_t  *p_rsp_buff = rsp_buff + 1;
     rsp_buff[0]= COMMAND_ID_SENSOR_HUB;
        
-    while(msg_len)
+    while(msg_len) //maybe received keys more than one 
     {
         
-	uint8_t field_len = p_data[msg_offset + LENGTH_OFFSET]; 
-	uint8_t field_type = p_data[msg_offset + KEY_OFFSET]; 
-    uint8_t const *key_value  = &p_data[msg_offset + VALUE_OFFSET]; 
-    if(msg_len>field_len+1)
-    {
-        msg_len -=(field_len+1); 
-        msg_offset+=(field_len+1); 
-    }
-    else{
-        msg_len = 0;
-        
-    }
-    
-        
+        uint8_t field_len = p_data[msg_offset + LENGTH_OFFSET]; 
+        uint8_t field_type = p_data[msg_offset + KEY_OFFSET]; 
+        uint8_t const *key_value  = &p_data[msg_offset + VALUE_OFFSET]; 
+        if(msg_len>field_len+1)
+        {
+            msg_len -=(field_len+1); 
+            msg_offset+=(field_len+1); 
+        }
+        else
+        {
+            msg_len = 0;            
+        }
+            
 //	uint8_t field_len = p_data[ LENGTH_OFFSET ]; 
 //	uint8_t field_type = p_data[ KEY_OFFSET ]; 
 //    uint8_t const *key_value  = &p_data[ VALUE_OFFSET ];   
