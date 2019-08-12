@@ -31,7 +31,7 @@ void led_mode_set(uint8_t led_id ,  uint8_t mode);
 void led_inc_mode_drv_process(void);
 void led_rgb_timer_init(void);
 void led_inc_all_off(void);
-
+void app_led_pwm_uinit(void);
 #endif /* */
 
 

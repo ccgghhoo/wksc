@@ -39,6 +39,7 @@ static void power_off_wakeup_pin_config(uint32_t pin ,   uint8_t  en_level)
     app_i2c_slave_uninit(); 
     LIS3DH_spi_uninit();    
  	led_inc_all_off();
+    app_led_pwm_uinit(); 
     app_button_disable();     
     //CRITICAL_REGION_ENTER();  //
 #if NRF_LOG_BACKEND_UART_ENABLED
@@ -102,7 +103,7 @@ void power_off_pin_check_when_reset(void)
 {
     uint32_t reset_reason;
     reset_reason = nrf_power_resetreas_get();
-    POWER_OFF_LOG("reset reason = %x ", reset_reason);
+//    POWER_OFF_LOG("reset reason = %x ", reset_reason);
     
     if (nrf_gpio_pin_read(PWR_OFF_WAKE_UP_PIN) == 0)
     {
@@ -113,15 +114,15 @@ void power_off_pin_check_when_reset(void)
             power_off_mode_enter();
         }        
     }
-    else
-    {
-        POWER_OFF_LOG("PWR_OFF_WAKE_UP_PIN=1"); 
-        nrf_delay_ms(20);
-        if (nrf_gpio_pin_read(PWR_OFF_WAKE_UP_PIN) == 0)
-        {            
-            power_off_mode_enter();
-        } 
-    }
+//    else
+//    {
+//        POWER_OFF_LOG("PWR_OFF_WAKE_UP_PIN=1"); 
+//        nrf_delay_ms(20);
+//        if (nrf_gpio_pin_read(PWR_OFF_WAKE_UP_PIN) == 0)
+//        {            
+//            power_off_mode_enter();
+//        } 
+//    }
         
     
 }

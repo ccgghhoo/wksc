@@ -66,6 +66,11 @@ void bsp_pwm_init(void)
     stop_led_pwm0();
 }
 
+void app_led_pwm_uinit(void)
+{     
+     nrfx_pwm_uninit(&m_pwm0); 
+}
+
 
 void led_pwm_breath_handle(void)
 {

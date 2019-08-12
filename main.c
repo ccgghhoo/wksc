@@ -113,8 +113,7 @@ static void main_loop(void)
         if(m_user_time_senconds%60==0)
         {
             battery_level_cal();
-            batt_voltage_get();
-            //md_motion_int_en(EINT2_MOTION_ALERT_PIN);    //for test 07/24
+            batt_voltage_get();            
         }   
 //         AxesRaw_t raw_data;     //2019/08/02 for test
 //         LIS3DH_GetAccAxesRaw(&raw_data);      
@@ -122,7 +121,7 @@ static void main_loop(void)
 //        
         
         md_motion_or_static_alert_judge();
-        //power_off_pin_check_when_reset(); 
+        power_off_pin_check_when_reset(); 
         
         if(check_app_evt(APP_EVT_DFU_RESET))
         {
@@ -188,7 +187,7 @@ int main(void)
 //    nrf_gpio_cfg_input(25, NRF_GPIO_PIN_NOPULL); //for test I2C 
 //    nrf_gpio_cfg_output(6); //for test I2C 
 //    nrf_gpio_pin_clear(6);       
-//    nrf_gpio_pin_set(8);
+//    nrf_gpio_pin_set(6);
 
 //    app_dfu_flash_init();
 //    dfu_setting_flash_init();
@@ -203,14 +202,16 @@ int main(void)
     led_mode_set(0 ,  0);  
     led_mode_set(1 ,  0); 
     led_mode_set(2 ,  0);
-    led_mode_set(3 ,  0xcc);
+    led_mode_set(3 ,  0xc0);
     
-    power_off_pin_check_when_reset(); 
+//    power_off_pin_check_when_reset(); 
 
        
     while (1)
     {
-                    
+//        nrf_gpio_cfg_output(6);  
+//        nrf_gpio_pin_set(6); 
+        
         NRF_LOG_FLUSH();    
 //        nrf_delay_ms(10000);        
         main_loop();

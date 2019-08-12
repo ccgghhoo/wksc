@@ -72,6 +72,11 @@ void batt_adc_init(void)
 
 }
 
+void batt_adc_uninit(void)
+{    
+   nrfx_saadc_uninit();
+}
+
 void batt_start_measure(void)
 {    
     nrfx_saadc_sample(); // only start adc sample once
@@ -96,7 +101,9 @@ int16_t batt_adc_value_av_get(void)
         m_batt_adc_buffer[i] = batt_adc_value_get();
         batt_value_sum += m_batt_adc_buffer[i];
     }
-    return batt_value_sum/BATT_SAMPLE_NUM;
+    batt_value_sum /= BATT_SAMPLE_NUM;
+    
+    return batt_value_sum;
 }
 
 uint32_t batt_voltage_av_get(void)
