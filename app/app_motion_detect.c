@@ -235,14 +235,7 @@ static void md_start_work(void)
     
     md.static_flag = 0;
     md.motion_flag = 1;
-//    if(md.motion_flag==1)
-//    {
-//        md.motion_flag=2;
-//    }
-//    else
-//    {
-//        md.motion_flag=0;
-//    }
+    md.motion_ind_flag = 1;
     md.motion_detct_cnt = 0;
     md.static_detct_cnt = 0;
     
@@ -264,6 +257,7 @@ static void md_start_sleep(void)
     md.wakeup=false; //chen
     md.motion_flag = 0;
     md.static_flag = 1;
+    md.motion_ind_flag = 0; //2019/08/30
     
     md.motion_detct_cnt=0;
     md.motion_alert_flag = 0;
@@ -324,31 +318,49 @@ void md_motion_or_static_alert_judge(void)
 //            MD_LOG("[MD]: motion state :%d", tmp);
 //            last_tmp=tmp;
 //        }
+
+        uint8_t int_en_satus=0;
       
         if(md.fall_down_flag && pin_int_en.int_en.int_en_bits.falldown_int_en)
         { 
             MD_LOG("[MD]: fall_down_flag alert INT generated \r\n");
-            md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            int_en_satus = 1;
+            //md_motion_int_en(EINT1_MOTION_ALERT_PIN);
         }                   
         if(md.tilt_flag && pin_int_en.int_en.int_en_bits.tilt_int_en)
         {   
             MD_LOG("[MD]: tilt_flag alert INT generated \r\n");
-            md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            //md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            int_en_satus = 1;
         }
         if(md.static_alert_flag && pin_int_en.int_en.int_en_bits.static_int_en)
         {
             MD_LOG("[MD]: static_alert_flag alert INT generated \r\n");
-            md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            //md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            int_en_satus = 1;
         }
         if(md.motion_alert_flag && pin_int_en.int_en.int_en_bits.motion_int_en)
         {
             MD_LOG("[MD]: motion_alert_flag alert INT generated \r\n");
-            md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            //md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            int_en_satus = 1;
+        }
+        if(md.motion_ind_flag==1 && pin_int_en.int_en.int_en_bits.motion_state_change_int_en)//08/30
+        {
+            md.motion_ind_flag |= 0x80;               //alert once
+            //md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            int_en_satus = 1;
         }
         
         if(batt_level_get()<pin_int_en.batt_threshold && pin_int_en.int_en.int_en_bits.batt_lvl_change_thres)
         {
             MD_LOG("[MD]: batt change_thres alert INT generated \r\n");
+            //md_motion_int_en(EINT1_MOTION_ALERT_PIN);
+            int_en_satus = 1;
+        }
+        
+        if(int_en_satus)
+        {
             md_motion_int_en(EINT1_MOTION_ALERT_PIN);
         }
     

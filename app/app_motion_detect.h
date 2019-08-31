@@ -13,12 +13,12 @@ typedef struct
     bool timeout;     
     bool wakeup; 
     bool workmode; 
-  //  bool activity; 
     bool tilt_flag;   //chen    
     bool fall_down_flag;    
     bool motion_alert_flag;    
     bool static_alert_flag;
     
+    uint8_t motion_ind_flag;    
     uint8_t static_flag; 
     uint8_t motion_flag;
     

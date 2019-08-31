@@ -167,10 +167,10 @@ uint8_t *p_readbuff = readbuff;
         *p_readbuff|= 1<<3;
         md.fall_down_flag = 0;
     } 
-//    if(md.motion_ind)
-//    {
-//        *p_readbuff|= 1<<4;
-//    }
+    if(md.motion_ind_flag)
+    {
+        *p_readbuff|= 1<<4;
+    }
     p_readbuff++;
     *p_readbuff++= 0;
     *p_readbuff++= 0;    
