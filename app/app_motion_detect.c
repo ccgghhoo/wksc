@@ -249,7 +249,7 @@ static void md_start_sleep(void)
     LIS3DH_WriteReg(0x3e,0x8); //act threshold 8*16mg=128mg   
     LIS3DH_WriteReg(0x3f,0x02); //act duration
     LIS3DH_WriteReg(LIS3DH_CTRL_REG3,0x04);
-    LIS3DH_WriteReg(LIS3DH_CTRL_REG6,0x0A);
+    LIS3DH_WriteReg(LIS3DH_CTRL_REG6,0x0A); //INT2  active low
     
     md_timer_stop();
     md.workmode = false;
@@ -319,7 +319,7 @@ void md_motion_or_static_alert_judge(void)
 //            last_tmp=tmp;
 //        }
 
-        uint8_t int_en_satus=0;
+        uint8_t int_en_satus=0;        
       
         if(md.fall_down_flag && pin_int_en.int_en.int_en_bits.falldown_int_en)
         { 
@@ -358,6 +358,14 @@ void md_motion_or_static_alert_judge(void)
             //md_motion_int_en(EINT1_MOTION_ALERT_PIN);
             int_en_satus = 1;
         }
+        
+        if(pin_int_en.factory_test_int_en && pin_int_en.int_en.int_en_bits.factory_test)
+        {
+            pin_int_en.factory_test_int_en = 0;
+            MD_LOG("[MD]: factory_test INT \r\n");
+            int_en_satus = 1;
+        }
+        
         
         if(int_en_satus)
         {

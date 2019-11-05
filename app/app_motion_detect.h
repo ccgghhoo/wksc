@@ -37,13 +37,15 @@ typedef struct{
             uint32_t motion_state_change_int_en: 1; 
             uint32_t step_over_flow_thres: 1; 
             uint32_t batt_lvl_change_thres: 1; 
-            uint32_t reserve: 25;          
+            uint32_t reserve: 24; 
+            uint32_t factory_test: 1;    
         }int_en_bits;    
         uint32_t value; 
     }int_en;
     
     uint16_t  step_threshold;
     uint8_t   batt_threshold;
+    uint8_t   factory_test_int_en;
 }alert_int_en_t;
  
 

@@ -173,10 +173,11 @@ static void dev_conf_update_from_factory_default(void)
 	dev_settings.alert.motion.enable = MOTION_ALERT_ENABLE; 
 	dev_settings.alert.motion.setup_time = MOTION_ALERT_SETUP_TIME; 
 	dev_settings.alert.motion.action_time = MOTION_ALERT_ACTION_TIME; 
-	
+	dev_settings.alert.motion.dial = 0;
 	// Actionless 
 	dev_settings.alert.actionless.enable = ACTIONLESS_ALERT_ENABLE; 
 	dev_settings.alert.actionless.threshold = ACTIONLESS_ALERT_THRESHOLD; 
+    dev_settings.alert.actionless.dial = 0;
 	
 	// Speed 
 	dev_settings.alert.speed.enable = SPEED_ALERT_ENABLE; 

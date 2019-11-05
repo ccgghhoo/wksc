@@ -8,7 +8,12 @@
 #include "app_motion_detect.h"
 #include "app_utc_time.h"
 
-
+#if 0
+#include "nrf_log.h"
+#define STATE_MOTION_LOG  NRF_LOG_INFO
+#else
+#define STATE_MOTION_LOG(...)  
+#endif 
 
 //static
     state_motion_t m_state_motion =
@@ -159,7 +164,7 @@ void MotionAlert_Update(int32_t diff)
 
             if (m_state_motion.motion_count >= SECONDS_OF_FREQ(dev_config_get_alert_motion_action_time()))
             {
-//                HID_LOG(LOG_MOALERT, "Motion  Alert %d %d .\r\n");
+                STATE_MOTION_LOG("Motion Alert event!!!! \r\n");
                 m_state_motion.state = MOTION_ALERT_STA_ALERT;
                 
                 md_app_tilt_falldown_event_received(MOTION_ALERT_EVENT); //chen 
@@ -365,6 +370,8 @@ void MotionAlertLoop()
 
 
     }
+    
+    //STATE_MOTION_LOG("Motionstate:%d", m_state_motion.state);
 
 }
 

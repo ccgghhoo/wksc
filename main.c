@@ -204,7 +204,7 @@ int main(void)
     led_mode_set(2 ,  0);
     led_mode_set(3 ,  0xc0);
     
-//    power_off_pin_check_when_reset(); 
+    //power_off_pin_check_when_reset(); 
 
        
     while (1)

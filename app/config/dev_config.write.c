@@ -847,22 +847,36 @@ bool dfw_alert_motion_write( const uint8_t * p_data, uint8_t len )
 	
 	alert_motion_t motion; 
 	motion.value = uint32_decode( p_data ); 
-	
+	dev_settings.alert.motion.dial = motion.dial;
+    dev_settings.alert.motion.enable = motion.enable;
+/*    
 	if( motion.enable > 0 ){
 		if( motion.setup_time < ALERT_MOTION_SETUP_TIME_MIN 
 		||	motion.setup_time > ALERT_MOTION_SETUP_TIME_MAX )
 		{
 			return false; 
-		}
-		
+		}       		
 		if( motion.action_time < ALERT_MOTION_ACTION_TIME_MIN 
 		|| motion.action_time > ALERT_MOTION_ACTION_TIME_MAX )
 		{
 			return false; 
 		}
-	}
-	
-	dev_settings.alert.motion = motion; 	
+	}	
+	dev_settings.alert.motion = motion; 
+*/	
+	if( motion.enable > 0 ){
+		if( motion.setup_time >= ALERT_MOTION_SETUP_TIME_MIN 
+		&&	motion.setup_time <= ALERT_MOTION_SETUP_TIME_MAX )
+		{
+			dev_settings.alert.motion.setup_time = motion.setup_time; 
+		}       		
+		if( motion.action_time >= ALERT_MOTION_ACTION_TIME_MIN 
+		&& motion.action_time <= ALERT_MOTION_ACTION_TIME_MAX )
+		{
+			dev_settings.alert.motion.action_time = motion.action_time;
+		}
+	}    
+    
     m_dev_cb( DEV_UPDATE_ALERT_MOTION ); 
 	return true; 
 }
@@ -889,6 +903,9 @@ bool dfw_alert_actionless_write( const uint8_t * p_data, uint8_t len)
 	
 	alert_static_t actionless; 
 	actionless.value = uint32_decode( p_data ); 
+    dev_settings.alert.actionless.dial = actionless.dial;
+    dev_settings.alert.actionless.enable = actionless.enable;
+/*
 	if( actionless.enable > 0 ){
 		if( actionless.threshold > ALERT_STATIC_THRESHOLD_MAX 
 		|| actionless.threshold < ALERT_STATIC_THRESHOLD_MIN)
@@ -896,6 +913,16 @@ bool dfw_alert_actionless_write( const uint8_t * p_data, uint8_t len)
 	}
 	
 	dev_settings.alert.actionless = actionless; 
+*/
+	if( actionless.enable > 0 ){
+		if( actionless.threshold <= ALERT_STATIC_THRESHOLD_MAX 
+		&& actionless.threshold >= ALERT_STATIC_THRESHOLD_MIN)
+        {
+            dev_settings.alert.actionless.threshold = actionless.threshold;
+        }
+			 
+	}
+	  
 	m_dev_cb( DEV_UPDATE_ALERT_STATIC ); 
 	return true; 
 }

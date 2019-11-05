@@ -540,7 +540,10 @@ static uint8_t protocol_set_int_en(const uint8_t * p_data, uint16_t len)
     memcpy((uint8_t *)&pin_int_en.int_en.value, p_data, 4);
     pin_int_en.step_threshold = p_data[4]+(p_data[5]<<8);
     pin_int_en.batt_threshold = p_data[6];
-    
+    if(pin_int_en.int_en.int_en_bits.factory_test)
+    {
+        pin_int_en.factory_test_int_en = 1;
+    }
     return EPB_SUCCESS;
 }
 

@@ -16,7 +16,7 @@ const app_info_t  appl_info            __attribute__((at((uint32_t)APP_FW_INFO_S
 	.date = APP_FW_DATE,
 	.time = APP_FW_TIME, 
 }; 
-
+ 
 
 
 

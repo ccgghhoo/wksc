@@ -743,20 +743,20 @@
 // <o> Action Time (unit: minutes) 
 // <#*60>
 #ifndef MOTION_ALERT_ACTION_TIME
-#define MOTION_ALERT_ACTION_TIME	60 
+#define MOTION_ALERT_ACTION_TIME	3
 #endif 
 
 // </e> !Motion Alert Enable 
 
 // <e> Actionless Alert Enable  
 #ifndef ACTIONLESS_ALERT_ENABLE 
-#define ACTIONLESS_ALERT_ENABLE		0 
+#define ACTIONLESS_ALERT_ENABLE		1 
 #endif 
 
 // <o> Threshold (unit: minutes ) 
 // <#*60> 
 #ifndef ACTIONLESS_ALERT_THRESHOLD	
-#define ACTIONLESS_ALERT_THRESHOLD	120 
+#define ACTIONLESS_ALERT_THRESHOLD	600 
 #endif 
 
 // </e> !Actionless Alert Enable 
@@ -786,7 +786,7 @@
 
 // <o> Action Time Threshold( unit: minutes ) 
 #ifndef TILT_ALERT_TIME_THRESHOLD	
-#define TILT_ALERT_TIME_THRESHOLD		20 
+#define TILT_ALERT_TIME_THRESHOLD		30 
 #endif 
 
 // </e> !Tilt Alert Enable 
@@ -812,7 +812,7 @@
 
 // <o> Time Threshold(unit: seconds )
 #ifndef FALLDOWN_ALERT_TIME
-#define FALLDOWN_ALERT_TIME		120 
+#define FALLDOWN_ALERT_TIME		30//120 
 #endif 
 
 // </e> !Falldown Alert enable 
