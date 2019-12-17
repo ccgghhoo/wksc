@@ -120,7 +120,8 @@ const alert_motion_t * dev_config_get_alert_motion(void);
 
  bool dev_config_get_alert_tilt_enable(void);
  uint8_t dev_config_get_alert_tilt_angle(void);
- uint8_t dev_config_get_alert_tilt_threshold(void);
+// uint8_t dev_config_get_alert_tilt_threshold(void);
+uint16_t dev_config_get_alert_tilt_threshold(void);
  bool dev_config_get_alert_falldown_enable(void);
  bool dev_config_get_alert_falldown_call(void);
  uint8_t dev_config_get_alert_falldown_level(void);

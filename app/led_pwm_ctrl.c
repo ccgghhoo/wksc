@@ -190,6 +190,7 @@ void led_pwm_breath_handle(void)
             }
             break;   
 
+//            
         case  0x0C:
         {
             static uint8_t  on_cnt=0 , off_cnt=0, cycle_cnt=0;
@@ -284,6 +285,61 @@ void led_pwm_breath_handle(void)
          }
          break; 
 
+//-----------------------------------------------------------------------         
+         case  0x0e:
+        {
+            static bool on_flag=1;            
+            if(on_flag)
+            {
+                m_pwm0_seq_values.channel_0 = 0;
+                m_pwm0_seq_values.channel_1 = LED_PWM_PERIOD;
+            }
+            else
+            {
+                m_pwm0_seq_values.channel_0 = LED_PWM_PERIOD;
+                m_pwm0_seq_values.channel_1 = LED_PWM_PERIOD;                                            
+            }           
+            on_flag = !on_flag;            
+        }        
+        break;
+        
+        
+        case  0xe0:
+         {
+            static bool on_flag=1; 
+            if(on_flag)
+            {                
+                m_pwm0_seq_values.channel_0 = LED_PWM_PERIOD;
+                m_pwm0_seq_values.channel_1 = 0;
+            }
+            else
+            {
+                m_pwm0_seq_values.channel_0 = LED_PWM_PERIOD;
+                m_pwm0_seq_values.channel_1 = LED_PWM_PERIOD;              
+            } 
+            on_flag = !on_flag; 
+         }
+         
+         break; 
+         
+        case  0xee:        
+         {
+            static bool on_flag=1;
+            if(on_flag)
+            {
+                m_pwm0_seq_values.channel_1 = 0;
+                m_pwm0_seq_values.channel_0 = 0;
+            }
+            else
+            {
+                m_pwm0_seq_values.channel_0 = LED_PWM_PERIOD;
+                m_pwm0_seq_values.channel_1 = LED_PWM_PERIOD;                
+            }
+            on_flag = !on_flag;        
+         }
+         break; 
+
+
          
         
         
@@ -341,6 +397,8 @@ const uint8_t  led_ind_mode_10_db[]={3,1,3,1,3,1,0};
 const uint8_t  led_ind_mode_11_db[]={3,1,3,1,3,1,3,1,0};
 const uint8_t  led_ind_mode_12_db[]={3,1,3,1,3,1,3,1,3,1,3,0};
 
+//const uint8_t  led_ind_mode_13_db[]={2,1,1,0};  //2 =cycle
+
 const uint8_t * p_led_db[] =
 {
     led_ind_mode_0_db,
@@ -356,6 +414,7 @@ const uint8_t * p_led_db[] =
     led_ind_mode_10_db,
     led_ind_mode_11_db,
     led_ind_mode_12_db,
+    //led_ind_mode_13_db,
 };
 
 

@@ -416,7 +416,7 @@ __INLINE uint8_t dev_config_get_alert_tilt_angle(void)
 {
 	return dev_settings.alert.tilt.angle ; 
 }
-__INLINE uint8_t dev_config_get_alert_tilt_threshold(void)
+__INLINE uint16_t dev_config_get_alert_tilt_threshold(void) //uint8_t ->uint16_t
 {
 	return dev_settings.alert.tilt.time; 
 }

@@ -376,7 +376,7 @@ void tilt_moudle_gsensor_data_handler(vector3_t *input, bool temp_device_is_slee
                 {
                     m_tilt_module.tilt_state_handler(TILE_MODULE_STATUE_OCCUR);
                 }
-                Nprintf( "[TILT] tilt detect! \r\n");
+                Nprintf( "[TILT] tilt detect! %d %d" ,m_user_tilt_static_counter, m_user_config_alarm_value.user_alarm_time_value);
 //                Nprintf( "[TILT] 设置的倾斜角度：%d 倾斜持续时间：%d.\r\n", m_user_config_alarm_value.user_alarm_angle_value, m_user_config_alarm_value.user_alarm_time_value);
                 m_device_current_state = TILT_REBACK_FIRST;
             }

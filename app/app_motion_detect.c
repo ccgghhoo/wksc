@@ -46,23 +46,23 @@ static on_orient_detected_handle_t on_orient_callback = NULL;
 
 void md_app_tilt_falldown_event_received(uint32_t input_event)
 {
-    if(input_event==TILT_ALERT_EVENT)
+    if(input_event==TILT_ALERT_EVENT && dev_config_get_alert_tilt_enable())
     {
         md.tilt_flag = true;
         MD_LOG("[MD]: TILT DETECTED!!!! \r\n");
         
     }
-    else if(input_event==FALLDOWN_ALERT_EVENT)
+    else if(input_event==FALLDOWN_ALERT_EVENT && dev_config_get_alert_falldown_enable())
     {
         md.fall_down_flag = true;
         MD_LOG("[MD]: FALLDOWN DETECTED!!!! \r\n");
     }
-    else if(MOTION_ALERT_EVENT==input_event)
+    else if(MOTION_ALERT_EVENT==input_event && dev_config_get_alert_motion_enable())
     {
         md.motion_alert_flag = 1;
         MD_LOG("[MD]: motion alert generated !!!! \r\n");
     }
-    else if(NOMOTION_ALERT_EVENT==input_event)
+    else if(NOMOTION_ALERT_EVENT==input_event && dev_config_get_alert_actionless_enable())
     {
         md.static_alert_flag = 1;
         MD_LOG("[MD]: STATIC  alert generated !!!! \r\n");

@@ -440,7 +440,7 @@ typedef union{//alert_falldown_t
 		uint8_t level: 4; 
 		uint8_t reserve: 2;
         uint8_t call: 1;
-        uint8_t enable: 2;
+        uint8_t enable: 1;
 	};    
 	uint8_t value;
     
